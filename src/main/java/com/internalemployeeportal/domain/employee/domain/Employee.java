@@ -30,9 +30,6 @@ public class Employee extends BaseEntity {
     @Column(name = "date_of_birth", nullable = false)
     private String dateOfBirth;
 
-    @Column(name = "position", nullable = false)
-    private String position;
-
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
@@ -43,12 +40,11 @@ public class Employee extends BaseEntity {
 
 
     @Builder
-    public Employee(String firstName, String lastName, String email, String dateOfBirth, String position, Department department) {
+    public Employee(String firstName, String lastName, String email, String dateOfBirth, Department department) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
-        this.position = position;
         this.department = department;
     }
 
