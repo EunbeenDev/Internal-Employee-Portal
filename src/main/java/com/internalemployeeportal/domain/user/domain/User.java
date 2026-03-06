@@ -21,8 +21,8 @@ public class User extends BaseEntity {
     @Column(name = "account_id", nullable = false, unique = true)
     private String accountId;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
@@ -33,9 +33,9 @@ public class User extends BaseEntity {
     private Employee employee;
 
     @Builder
-    public User(String accountId, String password, Role role, Employee employee) {
+    public User(String accountId, String passwordHash, Role role, Employee employee) {
         this.accountId = accountId;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.role = role;
         this.employee = null;
     }
