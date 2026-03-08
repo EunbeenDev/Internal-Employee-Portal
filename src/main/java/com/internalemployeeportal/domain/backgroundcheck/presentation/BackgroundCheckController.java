@@ -88,7 +88,7 @@ public class BackgroundCheckController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("{employeeCode}/list/Flagged")
+    @GetMapping("{employeeCode}/list/flagged")
     public ResponseEntity<?> getFlaggedBackgroundCheckResultList(@PathVariable String employeeCode) {
         return backgroundCheckService.getFlaggedBackgroundCheckResultList(employeeCode);
     }
