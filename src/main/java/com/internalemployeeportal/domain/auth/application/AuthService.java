@@ -62,7 +62,9 @@ public class AuthService {
 
         // JWT 토큰 생성
         String accessToken = jwtTokenUtil.generateToken(claims, accountId);
-        log.info ("Generated access token for accountId [{}]: {}", accountId, accessToken);
+        // 만료 시간 로그에 기록
+        log.info ("Generated access token for accountId [{}] with claims: {}. Access token expires in {} ms.",
+                accountId, claims, jwtTokenUtil.getAccessTokenExpiration());
         String refreshToken = jwtTokenUtil.generateRefreshToken(new HashMap<>(), accountId);
 
 
@@ -90,14 +92,11 @@ public class AuthService {
         return buildOkResponse("로그아웃이 완료되었습니다.");
     }
 
-    // TODO: 직원 퇴사 시 로직
-
-
     @Transactional
     public ResponseEntity<?> signUp(String accountId, String password) {
         // 이미 존재하는 사용자 검증
         Optional<User> existingUser = userRepository.findByAccountId(accountId);
-        DefaultAssert.isTrue(existingUser.isEmpty(), "이미 사용 중인 이메일입니다.");
+        DefaultAssert.isTrue(existingUser.isEmpty(), "이미 사용 중인 계정 ID입니다.");
 
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(password);
