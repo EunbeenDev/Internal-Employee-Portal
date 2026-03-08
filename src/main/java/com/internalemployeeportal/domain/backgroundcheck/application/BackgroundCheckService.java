@@ -33,9 +33,9 @@ public class BackgroundCheckService {
     private final EmployeeRepository employeeRepository;
 
     @Transactional
-    public ResponseEntity<?> requestBackgroundCheck(Long employeeId) {
+    public ResponseEntity<?> requestBackgroundCheck(String employeeCode) {
 
-        Employee employee = employeeRepository.findById(employeeId)
+        Employee employee = (Employee) employeeRepository.findByEmployeeCode(employeeCode)
                 .orElseThrow(EmployeeNotFoundException::new);
 
         // 이미 존재하는 Background Check가 PENDING 상태인 경우, 기존 데이터를 삭제
@@ -44,7 +44,7 @@ public class BackgroundCheckService {
 
             if (existingCheck.getCheckStatus() == CheckStatus.PENDING) {
                 backgroundCheckRepository.delete(existingCheck);
-                log.info("기존 PENDING 상태의 Background Check가 삭제되었습니다. Employee ID: {}", employeeId);
+                log.info("기존 PENDING 상태의 Background Check가 삭제되었습니다. Employee Code: {}", employeeCode);
             }
         }
 
@@ -117,8 +117,8 @@ public class BackgroundCheckService {
 
     // 모든 Pending 상태의 Background Check 조회
     public ResponseEntity<?> getPendingBackgroundCheckResultList() {
-        List<BackgroundCheck> pendingChecks = backgroundCheckRepository.findByEmployeeCodeAndCheckStatus(
-                null, CheckStatus.PENDING
+        List<BackgroundCheck> pendingChecks = backgroundCheckRepository.findByCheckStatus(
+                CheckStatus.PENDING
         );
 
         List<BackgroundCheckPendingRes> pendingResList = pendingChecks.stream()
