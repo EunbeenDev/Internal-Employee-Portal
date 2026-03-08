@@ -8,15 +8,12 @@ import com.internalemployeeportal.domain.user.domain.User;
 import com.internalemployeeportal.domain.user.domain.repository.UserRepository;
 import com.internalemployeeportal.domain.user.exception.UserNotFoundException;
 import com.internalemployeeportal.global.DefaultAssert;
-import com.internalemployeeportal.global.config.security.token.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -41,11 +38,11 @@ public class UserService {
 
         User user = userRepository.findByAccountId(accountId)
                 .orElseThrow(UserNotFoundException::new);
-
+        // 사용자 상태가 ACTIVE인지 확인
         if (user.getStatus() != Status.ACTIVE) {
             throw new AccountDisabledException();
         }
-
+        // 퇴사 여부 확인
         if (user.getEmployee() != null &&
                 user.getEmployee().getEmployeeStatus() == EmployeeStatus.TERMINATED) {
             throw new AccountDisabledException();
