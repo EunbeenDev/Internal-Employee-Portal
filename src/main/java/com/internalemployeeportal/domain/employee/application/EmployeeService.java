@@ -104,6 +104,7 @@ public class EmployeeService {
         return ResponseEntity.ok(myInfoRes);
     }
 
+    @Transactional
     public ResponseEntity<?> updateMyInfo(UserPrincipal userPrincipal, MyInfoUpdateReq myInfoUpdateReq) {
         User user = userRepository.findByAccountId(userPrincipal.getAccountId())
                 .orElseThrow(UserNotFoundException::new);
