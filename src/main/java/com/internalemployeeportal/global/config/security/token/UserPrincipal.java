@@ -1,18 +1,19 @@
 package com.internalemployeeportal.global.config.security.token;
 
 import com.internalemployeeportal.domain.user.domain.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class UserPrincipal implements UserDetails {
 
     private Long id;
+    @Getter
     private String accountId;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
@@ -49,12 +50,8 @@ public class UserPrincipal implements UserDetails {
         this.attributes = attributes;
     }
 
-    public Long getId() {
+    public Long getUserId() {
         return id;
-    }
-
-    public String getAccountId() {
-        return accountId;
     }
 
 
