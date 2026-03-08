@@ -26,4 +26,5 @@ public interface BackgroundCheckRepository extends JpaRepository<BackgroundCheck
             CheckStatus checkStatus
     );
 
+    List<BackgroundCheck> findByCheckStatus(CheckStatus checkStatus);
 }

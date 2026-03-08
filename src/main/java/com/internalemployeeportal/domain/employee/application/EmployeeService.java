@@ -5,12 +5,16 @@ import com.internalemployeeportal.domain.common.Status;
 import com.internalemployeeportal.domain.employee.domain.Employee;
 import com.internalemployeeportal.domain.employee.domain.EmployeeStatus;
 import com.internalemployeeportal.domain.employee.domain.repository.EmployeeRepository;
+import com.internalemployeeportal.domain.employee.dto.response.EmployeeListRes;
 import com.internalemployeeportal.domain.employee.exception.EmployeeNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -44,6 +48,18 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
+    public ResponseEntity<?> getEmployeeList() {
+        List<Employee> employees = employeeRepository.findAll();
+        List<EmployeeListRes> employeeListRes = employees.stream()
+                .map(employee -> new EmployeeListRes(
+                        employee.getEmployeeCode(),
+                        employee.getFirstName() + " " + employee.getLastName(),
+                        employee.getDepartment().getDepartmentName()))
+                .toList();
+        return ResponseEntity.ok(employeeListRes);
+    }
+
+
     public Employee findByEmployeeId(Long employeeId) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
         return optionalEmployee.orElseThrow(EmployeeNotFoundException::new);
@@ -56,4 +72,5 @@ public class EmployeeService {
         employee.updateEmployeeCode(employeeCode);
         employeeRepository.save(employee);
     }
+
 }
