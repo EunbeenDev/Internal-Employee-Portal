@@ -38,7 +38,7 @@ public class UserService {
 
     // 새로운 계정 생성
     @Transactional
-    public ResponseEntity<?> createAccount(UserPrincipal userPrincipal, @Valid SignUpReq signUpReq) {
+    public ResponseEntity<?> createAccount(SignUpReq signUpReq) {
         // 계정 ID 중복 확인
         validUniqueAccountId(signUpReq.getAccountId());
         String encodedPassword = passwordEncoder.encode(signUpReq.getPassword());
@@ -69,7 +69,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public ResponseEntity<?> terminateEmployee(UserPrincipal userPrincipal, Long employeeId) {
+    public ResponseEntity<?> terminateEmployee(Long employeeId) {
         // 직원 조회
         Employee employee = employeeService.findByEmployeeId(employeeId);
         // 직원 상태를 TERMINATED로 변경
