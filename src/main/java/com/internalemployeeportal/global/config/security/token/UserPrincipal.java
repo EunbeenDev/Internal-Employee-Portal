@@ -29,7 +29,7 @@ public class UserPrincipal implements UserDetails {
     public static UserPrincipal create(User user) {
 
         List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority("ROLE_" + user.getRole().getValue())
+                new SimpleGrantedAuthority(user.getRole().getValue())
         );
 
         return new UserPrincipal(

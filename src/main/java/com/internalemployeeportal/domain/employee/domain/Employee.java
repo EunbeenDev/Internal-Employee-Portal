@@ -31,7 +31,7 @@ public class Employee extends BaseEntity {
     private String dateOfBirth;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
+    @JoinColumn(name = "department_id", nullable = true)
     private Department department;
 
     @Enumerated(value = EnumType.STRING)
