@@ -51,9 +51,4 @@ public class AuthController {
         return authService.logout(userPrincipal);
     }
 
-    // TODO: 퇴사 처리 API
-    // 직원 퇴사 처리 시, 해당 직원의 토큰을 무효화하는 로직 추가 필요 + soft delete 처리
-
-
-
 }
