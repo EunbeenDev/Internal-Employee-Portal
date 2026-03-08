@@ -33,7 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "User", description = "User 정보 관리 API")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
+
 
     @Operation(summary = "계정 생성 API", description = "관리자가 새로운 직원 계정을 생성합니다.")
     @ApiResponses(value = {
@@ -42,9 +43,13 @@ public class UserController {
     })
     @PreAuthorize("hasRole('ADMIN')") // ADMIN 권한이 있는 사용자만 접근 가능
     @PostMapping("/account")
-    public ResponseEntity<?> createAccount(@Parameter @CurrentUser UserPrincipal userPrincipal, @Valid @RequestBody SignUpReq signUpReq) {
+    public ResponseEntity<?> createAccount(
+            @Parameter @CurrentUser UserPrincipal userPrincipal,
+            @Valid @RequestBody SignUpReq signUpReq) {
         return userService.createAccount(userPrincipal, signUpReq);
     }
+
+
 
 
 }
