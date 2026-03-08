@@ -19,6 +19,7 @@ import com.internalemployeeportal.global.config.security.util.JwtTokenUtil;
 
 import com.internalemployeeportal.global.payload.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
@@ -55,16 +57,14 @@ public class AuthService {
         validateEmployeeEmploymentStatus(user); // 직원의 고용 상태(퇴사 여부) 검증
 
         Map<String, Object> claims = new HashMap<>(); // JWT에 포함할 클레임 설정
-        claims.put("userId", user.getUserId());
+        claims.put("accountId", user.getAccountId());
         claims.put("role", user.getRole().getValue());
-
-        if (user.getEmployee() != null) {
-            claims.put("employeeId", user.getEmployee().getEmployeeId());
-        }
 
         // JWT 토큰 생성
         String accessToken = jwtTokenUtil.generateToken(claims, accountId);
+        log.info ("Generated access token for accountId [{}]: {}", accountId, accessToken);
         String refreshToken = jwtTokenUtil.generateRefreshToken(new HashMap<>(), accountId);
+
 
         saveOrUpdateRefreshToken(accountId, refreshToken);
 
