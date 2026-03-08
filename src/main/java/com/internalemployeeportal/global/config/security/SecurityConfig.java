@@ -25,11 +25,6 @@ public class SecurityConfig {
     private final CustomOncePerRequestFilter customOncePerRequestFilter;
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
