@@ -26,7 +26,7 @@ public class User extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
-    private Role role = Role.EMPLOYEE;
+    private Role role = Role.USER;
 
     @OneToOne
     @JoinColumn(name="employee_id", nullable = true)
