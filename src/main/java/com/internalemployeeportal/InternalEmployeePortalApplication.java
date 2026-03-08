@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 @PropertySource(value = { "classpath:database/application-database.yml" }, factory = YamlPropertySourceFactory.class)
 @PropertySource(value = { "classpath:swagger/application-springdoc.yml" }, factory = YamlPropertySourceFactory.class)
-
+@PropertySource(value = { "classpath:external/application-external.yml" }, factory = YamlPropertySourceFactory.class)
 public class InternalEmployeePortalApplication {
 
     public static void main(String[] args) {

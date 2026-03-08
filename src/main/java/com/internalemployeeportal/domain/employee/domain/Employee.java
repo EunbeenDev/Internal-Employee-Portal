@@ -18,6 +18,9 @@ public class Employee extends BaseEntity {
     @Column(name="employee_id", updatable = false, nullable = false, unique = true)
     private Long employeeId;
 
+    @Column(name = "employee_code", nullable = true)
+    private String employeeCode;
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -50,5 +53,9 @@ public class Employee extends BaseEntity {
 
     public void updateEmployeeStatus(EmployeeStatus employeeStatus) {
         this.employeeStatus = employeeStatus;
+    }
+
+    public void updateEmployeeCode(String employeeCode) {
+        this.employeeCode = employeeCode;
     }
 }

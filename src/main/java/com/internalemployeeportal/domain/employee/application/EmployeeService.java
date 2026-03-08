@@ -27,7 +27,9 @@ public class EmployeeService {
                 .email(signUpReq.getEmail())
                 .dateOfBirth(signUpReq.getDateOfBirth())
                 .build();
-        return saveEmployee(newEmployee);
+        saveEmployee(newEmployee);
+        generateEmployeeCode(newEmployee);
+        return newEmployee;
     }
 
     @Transactional
@@ -45,5 +47,13 @@ public class EmployeeService {
     public Employee findByEmployeeId(Long employeeId) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
         return optionalEmployee.orElseThrow(EmployeeNotFoundException::new);
+    }
+
+    @Transactional
+    public void generateEmployeeCode(Employee employee) {
+        // EMP-2024-001
+        String employeeCode = String.format("EMP-%d-%03d", employee.getCreatedAt().getYear(), employee.getEmployeeId());
+        employee.updateEmployeeCode(employeeCode);
+        employeeRepository.save(employee);
     }
 }
