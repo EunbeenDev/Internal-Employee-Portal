@@ -38,12 +38,7 @@ public class AuthController {
     })
     @PostMapping("/login")
     public ResponseEntity<?> localLogin(@Valid @RequestBody LocalSignInReq localSignInReq) {
-        try {
-            return authService.localLogin(localSignInReq);
-        } catch (Exception e) {
-            log.error("로그인 실패: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(ErrorResponse.of(ErrorCode.LOGIN_FAILED));
-        }
+        return authService.localLogin(localSignInReq);
     }
 
     @Operation(summary = "로그아웃 API", description = "로그아웃 API입니다.")
@@ -53,12 +48,7 @@ public class AuthController {
     })
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@Parameter @CurrentUser UserPrincipal userPrincipal) {
-        try {
-            return authService.logout(userPrincipal);
-        } catch (Exception e) {
-            log.error("로그아웃 실패: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(ErrorResponse.of(ErrorCode.LOGOUT_FAILED));
-        }
+        return authService.logout(userPrincipal);
     }
 
     // TODO: 퇴사 처리 API
