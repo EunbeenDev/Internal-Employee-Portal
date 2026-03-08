@@ -34,9 +34,9 @@ public class BackgroundCheckController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/{employeeId}")
-    public ResponseEntity<?> requestBackgroundCheck(@PathVariable Long employeeId) {
-        return backgroundCheckService.requestBackgroundCheck(employeeId);
+    @PostMapping("/{employeeCode}")
+    public ResponseEntity<?> requestBackgroundCheck(@PathVariable String employeeCode) {
+        return backgroundCheckService.requestBackgroundCheck(employeeCode);
 
     }
 
