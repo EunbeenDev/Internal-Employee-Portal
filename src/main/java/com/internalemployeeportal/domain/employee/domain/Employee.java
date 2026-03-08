@@ -58,4 +58,23 @@ public class Employee extends BaseEntity {
     public void updateEmployeeCode(String employeeCode) {
         this.employeeCode = employeeCode;
     }
+
+    public void updateDepartment(Department existingDepartment) {
+        	this.department = existingDepartment;
+    }
+
+    public void updateEmployeeInfo(String firstName, String lastName, String email, String dateOfBirth) {
+        if (firstName != null) {
+            this.firstName = firstName;
+        }
+        if (lastName != null) {
+            this.lastName = lastName;
+        }
+        if (email != null) {
+            this.email = email;
+        }
+        if (dateOfBirth != null) {
+            this.dateOfBirth = dateOfBirth;
+        }
+    }
 }

@@ -67,10 +67,10 @@ public class AuthService {
                 accountId, claims, jwtTokenUtil.getAccessTokenExpiration());
         String refreshToken = jwtTokenUtil.generateRefreshToken(new HashMap<>(), accountId);
 
-
         saveOrUpdateRefreshToken(accountId, refreshToken);
 
         LoginResponse loginResponse = LoginResponse.builder()
+                .role(user.getRole().getValue())
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
