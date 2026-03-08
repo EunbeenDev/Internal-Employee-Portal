@@ -20,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -113,6 +115,75 @@ public class BackgroundCheckService {
         }
     }
 
+    // 모든 Pending 상태의 Background Check 조회
+    public ResponseEntity<?> getPendingBackgroundCheckResultList() {
+        List<BackgroundCheck> pendingChecks = backgroundCheckRepository.findByEmployeeCodeAndCheckStatus(
+                null, CheckStatus.PENDING
+        );
+
+        List<BackgroundCheckPendingRes> pendingResList = pendingChecks.stream()
+                .map(check -> BackgroundCheckPendingRes.builder()
+                        .checkId(check.getVendorCheckId())
+                        .employeeId(check.getEmployeeCode())
+                        .employeeName(check.getEmployee().getFirstName() + " " + check.getEmployee().getLastName())
+                        .dateOfBirth(check.getEmployee().getDateOfBirth())
+                        .status(String.valueOf(check.getCheckStatus()))
+                        .createdAt(check.getRequestedAt())
+                        .build())
+                .toList();
+
+        return ResponseEntity.ok(pendingResList);
+    }
+
+    public ResponseEntity<?> getClearBackgroundCheckResultList(String employeeCode) {
+        List<BackgroundCheck> clearChecks = backgroundCheckRepository.findByEmployeeCodeAndCheckStatus(
+                employeeCode, CheckStatus.CLEAR
+        );
+
+        List<BackgroundCheckResultRes> clearResList = clearChecks.stream()
+                .map(check -> BackgroundCheckResultRes.builder()
+                        .checkId(check.getVendorCheckId())
+                        .employeeId(check.getEmployeeCode())
+                        .employeeName(check.getEmployee().getFirstName() + " " + check.getEmployee().getLastName())
+                        .dateOfBirth(check.getEmployee().getDateOfBirth())
+                        .status(String.valueOf(check.getCheckStatus()))
+                        .criminalRecord(check.getCriminalRecord())
+                        .educationVerified(check.getEducationVerified())
+                        .employmentVerified(check.getEmploymentVerified())
+                        .creditScore(check.getCreditScore())
+                        .createdAt(check.getRequestedAt())
+                        .completedAt(check.getCompletedAt() != null ? check.getCompletedAt() : null)
+                        .build())
+                .toList();
+
+        return ResponseEntity.ok(clearResList);
+    }
+
+    public ResponseEntity<?> getFlaggedBackgroundCheckResultList(String employeeCode) {
+        List<BackgroundCheck> flaggedChecks = backgroundCheckRepository.findByEmployeeCodeAndCheckStatus(
+                employeeCode, CheckStatus.FLAGGED
+        );
+
+        List<BackgroundCheckResultRes> flaggedResList = flaggedChecks.stream()
+                .map(check -> BackgroundCheckResultRes.builder()
+                        .checkId(check.getVendorCheckId())
+                        .employeeId(check.getEmployeeCode())
+                        .employeeName(check.getEmployee().getFirstName() + " " + check.getEmployee().getLastName())
+                        .dateOfBirth(check.getEmployee().getDateOfBirth())
+                        .status(String.valueOf(check.getCheckStatus()))
+                        .criminalRecord(check.getCriminalRecord())
+                        .educationVerified(check.getEducationVerified())
+                        .employmentVerified(check.getEmploymentVerified())
+                        .creditScore(check.getCreditScore())
+                        .createdAt(check.getRequestedAt())
+                        .completedAt(check.getCompletedAt() != null ? check.getCompletedAt() : null)
+                        .build())
+                .toList();
+
+        return ResponseEntity.ok(flaggedResList);
+    }
+
+
     // 응답 빌더 메서드
     private ResponseEntity<?> buildOkResponse(String message) {
         CommonApiResponse<Object> response = CommonApiResponse.builder()
@@ -121,6 +192,7 @@ public class BackgroundCheckService {
                 .build();
         return ResponseEntity.ok(response);
     }
+
 
 
 }
