@@ -1,4 +1,4 @@
-package com.internalemployeeportal.global.config.exception;
+package com.internalemployeeportal.global.exception;
 
 import com.internalemployeeportal.global.payload.ErrorCode;
 import lombok.Getter;
