@@ -25,8 +25,9 @@ public enum ErrorCode {
     USER_DUPLICATE(409, "USR002", "이미 존재하는 사용자입니다."),
     USER_NOT_FOUND(404, "USR001", "해당 사용자를 찾을 수 없습니다."),
     LOGIN_FAILED(400, "USR003", "로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요."),
-    LOGOUT_FAILED(400, "USR004", "로그아웃에 실패하였습니다. 다시 시도해주세요.");
+    LOGOUT_FAILED(400, "USR004", "로그아웃에 실패하였습니다. 다시 시도해주세요."),
 
+    EMPLOYEE_NOT_FOUND(404, "EMP001", "해당 직원을 찾을 수 없습니다.");
     private final String code;
     private final String message;
     private final int status;

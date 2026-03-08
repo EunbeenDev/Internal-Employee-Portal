@@ -48,4 +48,7 @@ public class Employee extends BaseEntity {
         this.department = department;
     }
 
+    public void updateEmployeeStatus(EmployeeStatus employeeStatus) {
+        this.employeeStatus = employeeStatus;
+    }
 }

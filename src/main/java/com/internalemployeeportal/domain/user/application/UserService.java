@@ -69,6 +69,14 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public ResponseEntity<?> terminateEmployee(UserPrincipal userPrincipal, Long employeeId) {
+        // 직원 조회
+        Employee employee = employeeService.findByEmployeeId(employeeId);
+        // 직원 상태를 TERMINATED로 변경
+        employeeService.terminateEmployee(employee);
+        return ResponseEntity.ok("직원이 성공적으로 퇴사 처리되었습니다.");
+    }
+
     public Optional<User> findByAccountId(String accountId) {
         return userRepository.findByAccountId(accountId);
     }

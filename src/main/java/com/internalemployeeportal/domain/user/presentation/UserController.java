@@ -21,10 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -50,6 +47,19 @@ public class UserController {
     }
 
 
+
+    @Operation(summary = "직원 퇴사 처리 API", description = "관리자가 직원의 퇴사 처리를 합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "퇴사 처리 성공", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class) ) } ),
+            @ApiResponse(responseCode = "400", description = "퇴사 처리 실패", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class) ) } ),
+    })
+    @PreAuthorize("hasRole('ADMIN')") // ADMIN 권한이 있는 사용자만 접근 가능
+    @PostMapping("/termination/{employeeId}")
+    public ResponseEntity<?> terminateEmployee(
+            @Parameter @CurrentUser UserPrincipal userPrincipal,
+            @PathVariable Long employeeId){
+        return userService.terminateEmployee(userPrincipal, employeeId);
+    }
 
 
 }
