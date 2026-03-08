@@ -53,7 +53,12 @@ public class AuthController {
     })
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@Parameter @CurrentUser UserPrincipal userPrincipal) {
-        return authService.logout(userPrincipal);
+        try {
+            return authService.logout(userPrincipal);
+        } catch (Exception e) {
+            log.error("로그아웃 실패: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(ErrorResponse.of(ErrorCode.LOGOUT_FAILED));
+        }
     }
 
     // TODO: 퇴사 처리 API
