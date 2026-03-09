@@ -1,0 +1,120 @@
+/* 전체 페이지 중앙 정렬 */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f7fa;
+}
+
+
+/* 로그인 박스 */
+
+.login-container {
+    width: 360px;
+    padding: 40px 36px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+
+/* 헤더 */
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #222;
+}
+
+.login-description {
+    font-size: 13px;
+    color: #666;
+}
+
+
+/* form */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 입력 그룹 */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-input {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #4a6cf7;
+}
+
+
+/* 메시지 영역 */
+
+.form-message {
+    font-size: 13px;
+    min-height: 18px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    color: #e53935;
+}
+
+.info-message {
+    color: #2e7d32;
+}
+
+
+/* 로그인 버튼 */
+
+.login-button {
+    margin-top: 6px;
+    height: 42px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4a6cf7;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-button:hover {
+    background-color: #3c58d6;
+}
+
+.login-button:disabled {
+    background-color: #9aa5f3;
+    cursor: not-allowed;
+}

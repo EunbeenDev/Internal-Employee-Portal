@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 | 계정 생성</title>
+
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admin.css">
+
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <h1 class="sidebar-title">Admin</h1>
+            <p class="sidebar-subtitle">Background Check System</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/html/admin.html" class="nav-link">대시보드</a>
+            <a href="/html/admin-employees.html" class="nav-link">직원 목록</a>
+            <a href="/html/admin-pending-checks.html" class="nav-link">Pending 조회</a>
+            <a href="/html/admin-create-account.html" class="nav-link active">계정 생성</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutButton" class="logout-button">로그아웃</button>
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="page-header">
+            <div>
+                <h2 class="page-title">신규 직원 계정 생성</h2>
+                <p class="page-description">관리자 권한으로 직원 계정을 생성합니다.</p>
+            </div>
+        </header>
+
+
+        <section class="message-section">
+            <div id="errorMessage" class="message error-message"></div>
+            <div id="infoMessage" class="message info-message"></div>
+        </section>
+
+
+        <section class="table-section">
+
+            <div class="section-header">
+                <h3 class="section-title">계정 정보 입력</h3>
+            </div>
+
+            <form id="createAccountForm" class="form-grid">
+
+                <div class="form-item">
+                    <label>계정 ID</label>
+                    <input id="accountId" required />
+                </div>
+
+                <div class="form-item">
+                    <label>비밀번호</label>
+                    <input id="password" type="password" required />
+                </div>
+
+                <div class="form-item">
+                    <label>First Name</label>
+                    <input id="firstName" required />
+                </div>
+
+                <div class="form-item">
+                    <label>Last Name</label>
+                    <input id="lastName" required />
+                </div>
+
+                <div class="form-item">
+                    <label>생년월일</label>
+                    <input id="dateOfBirth" type="date" required />
+                </div>
+
+                <div class="form-item">
+                    <label>이메일</label>
+                    <input id="email" type="email" required />
+                </div>
+
+                <div class="form-item">
+                    <label>부서명</label>
+                    <input id="department" required />
+                </div>
+
+                <div class="form-actions">
+
+                    <button type="button" id="submitButton" class="logout-button">
+                        계정 생성
+                    </button>
+
+                    <button type="button" id="resetButton" class="secondary-button">
+                        초기화
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="/js/admin-create-account.js"></script>
+
+</body>
+</html>
