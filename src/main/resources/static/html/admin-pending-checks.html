@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 | Pending Background Checks</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1 class="sidebar-title">Admin</h1>
+            <p class="sidebar-subtitle">Background Check System</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/html/admin.html" class="nav-link">대시보드</a>
+            <a href="/html/admin-employees.html" class="nav-link">직원 목록</a>
+            <a href="/html/admin-pending-checks.html" class="nav-link active">Pending 조회</a>
+            <a href="/html/admin-create-account.html" class="nav-link">계정 생성</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutButton" class="logout-button" type="button">로그아웃</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h2 class="page-title">Pending Background Check 목록</h2>
+                <p class="page-description">현재 pending 상태인 background check 요청을 조회합니다.</p>
+            </div>
+            <div class="page-actions">
+                <button id="refreshButton" class="secondary-button" type="button">새로고침</button>
+            </div>
+        </header>
+
+        <section class="message-section">
+            <div id="errorMessage" class="message error-message" aria-live="polite"></div>
+            <div id="infoMessage" class="message info-message" aria-live="polite"></div>
+        </section>
+
+        <section class="summary-section">
+            <div class="summary-card">
+                <p class="summary-label">Pending 건수</p>
+                <h3 id="pendingCount" class="summary-value">-</h3>
+                <p class="summary-caption">BackgroundCheckPendingRes 기준</p>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">Pending 목록</h3>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>Check ID</th>
+                        <th>직원 코드</th>
+                        <th>직원명</th>
+                        <th>생년월일</th>
+                        <th>퇴사 여부</th>
+                        <th>Status</th>
+                        <th>요청 시각</th>
+                    </tr>
+                    </thead>
+                    <tbody id="pendingTableBody">
+                    <tr>
+                        <td colspan="7" class="empty-cell">데이터를 불러오는 중입니다.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/js/admin-pending-checks.js"></script>
+</body>
+</html>

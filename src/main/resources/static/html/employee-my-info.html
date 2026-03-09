@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직원 | 내 정보</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1 class="sidebar-title">Employee</h1>
+            <p class="sidebar-subtitle">My Page</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/html/employee-my-info.html" class="nav-link active">내 정보 조회</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutButton" class="logout-button" type="button">로그아웃</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h2 class="page-title">내 정보 조회</h2>
+                <p class="page-description">직원 본인의 개인 정보를 조회할 수 있습니다.</p>
+            </div>
+            <div class="page-actions" style="display:flex; gap:12px;">
+                <button id="refreshButton" class="secondary-button" type="button">새로고침</button>
+                <button id="openEditModalButton" class="logout-button" type="button" style="max-width:160px;">수정</button>
+            </div>
+        </header>
+
+        <section class="message-section">
+            <div id="errorMessage" class="message error-message" aria-live="polite"></div>
+            <div id="infoMessage" class="message info-message" aria-live="polite"></div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">기본 정보</h3>
+            </div>
+
+            <div id="myInfoEmptyMessage" class="empty-block">
+                내 정보를 불러오는 중입니다.
+            </div>
+
+            <div id="myInfoViewSection" class="detail-grid" style="display:none;">
+                <div class="detail-item">
+                    <span class="detail-label">직원 코드</span>
+                    <span id="employeeCodeValue" class="detail-value">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">이름</span>
+                    <span id="nameValue" class="detail-value">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">이메일</span>
+                    <span id="emailValue" class="detail-value">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">생년월일</span>
+                    <span id="dateOfBirthValue" class="detail-value">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">소속 부서</span>
+                    <span id="departmentNameValue" class="detail-value">-</span>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- 수정 모달 -->
+<div id="editModalOverlay" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 class="modal-title">내 정보 수정</h3>
+            <button id="closeEditModalButton" class="modal-close-button" type="button">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <form id="editMyInfoForm" class="form-grid">
+                <div class="form-item">
+                    <label for="editFirstName">First Name</label>
+                    <input id="editFirstName" type="text" required>
+                </div>
+
+                <div class="form-item">
+                    <label for="editLastName">Last Name</label>
+                    <input id="editLastName" type="text" required>
+                </div>
+
+                <div class="form-item">
+                    <label for="editEmail">이메일</label>
+                    <input id="editEmail" type="email" required>
+                </div>
+
+                <div class="form-item">
+                    <label for="editDateOfBirth">생년월일</label>
+                    <input id="editDateOfBirth" type="date" required>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button id="cancelEditButton" class="secondary-button" type="button">취소</button>
+            <button id="saveEditButton" class="logout-button" type="button" style="max-width:140px;">저장</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/employee-my-info.js"></script>
+</body>
+</html>

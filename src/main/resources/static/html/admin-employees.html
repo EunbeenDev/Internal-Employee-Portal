@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 | 직원 목록</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1 class="sidebar-title">Admin</h1>
+            <p class="sidebar-subtitle">Background Check System</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/html/admin.html" class="nav-link">대시보드</a>
+            <a href="/html/admin-employees.html" class="nav-link active">직원 목록</a>
+            <a href="/html/admin-pending-checks.html" class="nav-link">Pending 조회</a>
+            <a href="/html/admin-create-account.html" class="nav-link">계정 생성</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutButton" class="logout-button" type="button">로그아웃</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h2 class="page-title">직원 목록 조회</h2>
+                <p class="page-description">관리자 권한으로 전체 직원 목록을 조회합니다.</p>
+            </div>
+            <div class="page-actions">
+                <button id="refreshButton" class="secondary-button" type="button">새로고침</button>
+            </div>
+        </header>
+
+        <section class="message-section">
+            <div id="errorMessage" class="message error-message" aria-live="polite"></div>
+            <div id="infoMessage" class="message info-message" aria-live="polite"></div>
+        </section>
+
+        <section class="summary-section">
+            <div class="summary-card">
+                <p class="summary-label">전체 직원 수</p>
+                <h3 id="employeeCount" class="summary-value">-</h3>
+                <p class="summary-caption">EmployeeListRes 기준</p>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">직원 목록</h3>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>직원 코드</th>
+                        <th>이름</th>
+                        <th>부서</th>
+                        <th>퇴사 여부</th>
+                        <th>상세</th>
+                    </tr>
+                    </thead>
+                    <tbody id="employeeTableBody">
+                    <tr>
+                        <td colspan="5" class="empty-cell">데이터를 불러오는 중입니다.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/js/admin-employees.js"></script>
+</body>
+</html>

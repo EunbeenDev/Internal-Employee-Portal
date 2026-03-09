@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 | 직원 상세</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1 class="sidebar-title">Admin</h1>
+            <p class="sidebar-subtitle">Background Check System</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/html/admin.html" class="nav-link">대시보드</a>
+            <a href="/html/admin-employees.html" class="nav-link active">직원 목록</a>
+            <a href="/html/admin-pending-checks.html" class="nav-link">Pending 조회</a>
+            <a href="/html/admin-create-account.html" class="nav-link">계정 생성</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutButton" class="logout-button" type="button">로그아웃</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h2 class="page-title">직원 상세 조회</h2>
+                <p class="page-description">직원의 최신 background check 결과와 이력을 조회합니다.</p>
+            </div>
+            <div class="page-actions" style="display:flex; gap:12px;">
+                <a href="/html/admin-employees.html" class="secondary-button" style="text-align:center; line-height:20px;">목록으로</a>
+                <button id="refreshButton" class="secondary-button" type="button">새로고침</button>
+            </div>
+        </header>
+
+        <section class="message-section">
+            <div id="errorMessage" class="message error-message" aria-live="polite"></div>
+            <div id="infoMessage" class="message info-message" aria-live="polite"></div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">Employee Information</h3>
+            </div>
+
+            <div id="employeeInfoEmptyMessage" class="empty-block">
+                직원 상세 정보를 불러오는 중입니다.
+            </div>
+
+            <div id="employeeInfoSection" class="detail-grid" style="display:none;">
+                <div class="detail-item">
+                    <span class="detail-label">직원 코드</span>
+                    <span id="employeeCodeValue" class="detail-value">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">이메일</span>
+                    <span id="employeeEmailValue" class="detail-value">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">직원명</span>
+                    <span id="employeeNameValue" class="detail-value">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">생년월일</span>
+                    <span id="employeeDateOfBirthValue" class="detail-value">-</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">Background Check Request</h3>
+            </div>
+
+            <div class="action-row" style="display:flex; gap:12px; flex-wrap:wrap;">
+                <button id="requestCheckButton" class="logout-button" type="button" style="max-width: 260px;">
+                    Background Check 요청
+                </button>
+                <button id="terminateEmployeeButton" class="secondary-button" type="button" style="max-width: 260px;">
+                    직원 퇴사 요청
+                </button>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">Latest Background Check Result</h3>
+            </div>
+
+            <div id="statusEmptyMessage" class="empty-block">
+                최신 background check 결과를 불러오는 중입니다.
+            </div>
+
+            <div id="statusSection" class="detail-grid" style="display:none;">
+                <div class="detail-item">
+                    <span class="detail-label">Check ID</span>
+                    <span id="statusCheckId" class="detail-value">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">상태</span>
+                    <span id="statusValue" class="detail-value">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">요청 시각</span>
+                    <span id="statusCreatedAt" class="detail-value">-</span>
+                </div>
+                <div class="detail-item result-only-field">
+                    <span class="detail-label">완료 시각</span>
+                    <span id="statusCompletedAt" class="detail-value">-</span>
+                </div>
+                <div class="detail-item result-only-field">
+                    <span class="detail-label">범죄 기록 여부</span>
+                    <span id="statusCriminalRecord" class="detail-value">-</span>
+                </div>
+                <div class="detail-item result-only-field">
+                    <span class="detail-label">학력 검증 여부</span>
+                    <span id="statusEducationVerified" class="detail-value">-</span>
+                </div>
+                <div class="detail-item result-only-field">
+                    <span class="detail-label">고용 검증 여부</span>
+                    <span id="statusEmploymentVerified" class="detail-value">-</span>
+                </div>
+                <div class="detail-item result-only-field">
+                    <span class="detail-label">신용 점수</span>
+                    <span id="statusCreditScore" class="detail-value">-</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">Background Check History - Clear</h3>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>Check ID</th>
+                        <th>직원 코드</th>
+                        <th>직원명</th>
+                        <th>상태</th>
+                        <th>신용 점수</th>
+                        <th>요청 시각</th>
+                        <th>완료 시각</th>
+                    </tr>
+                    </thead>
+                    <tbody id="clearHistoryTableBody">
+                    <tr>
+                        <td colspan="7" class="empty-cell">데이터를 불러오는 중입니다.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="section-header">
+                <h3 class="section-title">Background Check History - Flagged</h3>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>Check ID</th>
+                        <th>직원 코드</th>
+                        <th>직원명</th>
+                        <th>상태</th>
+                        <th>신용 점수</th>
+                        <th>요청 시각</th>
+                        <th>완료 시각</th>
+                    </tr>
+                    </thead>
+                    <tbody id="flaggedHistoryTableBody">
+                    <tr>
+                        <td colspan="7" class="empty-cell">데이터를 불러오는 중입니다.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/js/admin-employee-detail.js"></script>
+</body>
+</html>

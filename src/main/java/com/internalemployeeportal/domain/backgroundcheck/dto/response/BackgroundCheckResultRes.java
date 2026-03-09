@@ -20,6 +20,9 @@ public class BackgroundCheckResultRes {
     @Schema(description = "직원 이름(firstName + lastName)", example = "홍길동")
     private String employeeName;
 
+    @Schema(description = "직원 이메일", example = "hong.gildong@company.com")
+    private String email;
+
     @Schema(description = "직원 생년월일", example = "1990-03-15")
     private String dateOfBirth;
 

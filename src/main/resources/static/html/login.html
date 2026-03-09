@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <h1 class="login-title">로그인</h1>
+            <p class="login-description">
+                계정 ID와 비밀번호를 입력해주세요.
+            </p>
+        </div>
+
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="accountId" class="form-label">ID</label>
+                <input
+                        type="text"
+                        id="accountId"
+                        name="accountId"
+                        class="form-input"
+                        placeholder="계정 ID를 입력하세요"
+                        autocomplete="username"
+                        required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-input"
+                        placeholder="비밀번호를 입력하세요"
+                        autocomplete="current-password"
+                        required
+                >
+            </div>
+
+            <div id="errorMessage" class="form-message error-message" aria-live="polite"></div>
+            <div id="infoMessage" class="form-message info-message" aria-live="polite"></div>
+
+            <button type="submit" id="loginButton" class="login-button">
+                로그인
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/login.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ import com.internalemployeeportal.domain.backgroundcheck.dto.response.Background
 import com.internalemployeeportal.domain.backgroundcheck.dto.response.BackgroundCheckResultRes;
 import com.internalemployeeportal.domain.backgroundcheck.exception.BackgroundCheckNotFoundException;
 import com.internalemployeeportal.domain.employee.domain.Employee;
+import com.internalemployeeportal.domain.employee.domain.EmployeeStatus;
 import com.internalemployeeportal.domain.employee.domain.repository.EmployeeRepository;
 import com.internalemployeeportal.domain.employee.exception.EmployeeNotFoundException;
 import com.internalemployeeportal.global.payload.CommonApiResponse;
@@ -88,6 +89,7 @@ public class BackgroundCheckService {
                     .checkId(backgroundCheck.getVendorCheckId())
                     .employeeId(employee.getEmployeeCode())
                     .employeeName(employee.getFirstName() + " " + employee.getLastName())
+                    .email(employee.getEmail())
                     .dateOfBirth(employee.getDateOfBirth())
                     .status(String.valueOf(backgroundCheck.getCheckStatus()))
                     .criminalRecord(backgroundCheck.getCriminalRecord())
@@ -106,6 +108,7 @@ public class BackgroundCheckService {
                     .checkId(backgroundCheck.getVendorCheckId())
                     .employeeId(employee.getEmployeeCode())
                     .employeeName(employee.getFirstName() + " " + employee.getLastName())
+                    .email(employee.getEmail())
                     .dateOfBirth(employee.getDateOfBirth())
                     .status(String.valueOf(backgroundCheck.getCheckStatus()))
                     .createdAt(backgroundCheck.getRequestedAt())
@@ -129,6 +132,7 @@ public class BackgroundCheckService {
                         .dateOfBirth(check.getEmployee().getDateOfBirth())
                         .status(String.valueOf(check.getCheckStatus()))
                         .createdAt(check.getRequestedAt())
+                        .isTerminated(check.getEmployee().getEmployeeStatus() == EmployeeStatus.TERMINATED)
                         .build())
                 .toList();
 
