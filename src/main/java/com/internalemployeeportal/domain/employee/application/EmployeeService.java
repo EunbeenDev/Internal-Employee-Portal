@@ -66,7 +66,9 @@ public class EmployeeService {
                 .map(employee -> new EmployeeListRes(
                         employee.getEmployeeCode(),
                         employee.getFirstName() + " " + employee.getLastName(),
-                        employee.getDepartment().getDepartmentName()))
+                        employee.getDepartment().getDepartmentName(),
+                        employee.getEmployeeStatus(),
+                        employee.getEmployeeStatus() == EmployeeStatus.TERMINATED))
                 .toList();
         return ResponseEntity.ok(employeeListRes);
     }
@@ -119,5 +121,9 @@ public class EmployeeService {
         employeeRepository.save(employee);
 
         return ResponseEntity.ok("내 정보가 성공적으로 업데이트되었습니다.");
+    }
+
+    public Optional<Object> findByEmployeeCode(String employeeCode) {
+        return employeeRepository.findByEmployeeCode(employeeCode);
     }
 }

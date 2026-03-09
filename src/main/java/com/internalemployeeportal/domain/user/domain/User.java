@@ -40,4 +40,7 @@ public class User extends BaseEntity {
         this.employee = employee;
     }
 
+    public void updateUserRole(Role role) {
+        this.role = role;
+    }
 }

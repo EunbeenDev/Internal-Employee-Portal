@@ -7,6 +7,7 @@ import com.internalemployeeportal.domain.common.Status;
 import com.internalemployeeportal.domain.employee.application.EmployeeService;
 import com.internalemployeeportal.domain.employee.domain.Employee;
 import com.internalemployeeportal.domain.employee.domain.EmployeeStatus;
+import com.internalemployeeportal.domain.employee.exception.EmployeeNotFoundException;
 import com.internalemployeeportal.domain.user.domain.Role;
 import com.internalemployeeportal.domain.user.domain.User;
 import com.internalemployeeportal.domain.user.domain.repository.UserRepository;
@@ -70,11 +71,19 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public ResponseEntity<?> terminateEmployee(Long employeeId) {
+    @Transactional
+    public ResponseEntity<?> terminateEmployee(String employeeCode) {
         // 직원 조회
-        Employee employee = employeeService.findByEmployeeId(employeeId);
-        // 직원 상태를 TERMINATED로 변경
+        Employee employee = (Employee) employeeService.findByEmployeeCode(employeeCode)
+                .orElseThrow(EmployeeNotFoundException::new);
+        // 직원 퇴사 처리
         employeeService.terminateEmployee(employee);
+        User user = (User) userRepository.findUserByEmployeeCode(employeeCode)
+                .orElseThrow(UserNotFoundException::new);
+        user.updateStatus(Status.DISABLED);
+        user.updateUserRole(Role.EXECUTIVE);
+        userRepository.save(user);
+
         return ResponseEntity.ok("직원이 성공적으로 퇴사 처리되었습니다.");
     }
 
@@ -88,9 +97,10 @@ public class UserService {
         User user = userRepository.findByAccountId(accountId)
                 .orElseThrow(UserNotFoundException::new);
         // 사용자 상태가 ACTIVE인지 확인
-        if (user.getStatus() != Status.ACTIVE) {
+        if (user.getStatus() != Status.ACTIVE || user.getRole() == Role.EXECUTIVE) {
             throw new AccountDisabledException();
         }
+
         // 퇴사 여부 확인
         if (user.getEmployee() != null &&
                 user.getEmployee().getEmployeeStatus() == EmployeeStatus.TERMINATED) {
