@@ -22,6 +22,9 @@ public class BackgroundCheckPendingRes {
     @Schema(description = "직원 이름(firstName + lastName)", example = "홍길동")
     private String employeeName;
 
+    @Schema(description = "직원 이메일", example = "hong.gildong@company.com")
+    private String email;
+
     @Schema(description = "직원 생년월일", example = "1990-05-20")
     private String dateOfBirth;
 
@@ -30,4 +33,7 @@ public class BackgroundCheckPendingRes {
 
     @Schema(description = "Background Check 요청 생성 시간", example = "2025-01-15T09:30:00Z")
     private String createdAt;
+
+    @Schema(description = "퇴사 여부", example = "true")
+    private Boolean isTerminated;
 }
