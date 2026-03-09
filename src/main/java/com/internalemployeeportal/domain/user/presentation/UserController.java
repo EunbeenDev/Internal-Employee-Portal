@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,33 +33,30 @@ public class UserController {
 
     private final UserService userService;
 
-
     @Operation(summary = "계정 생성 API", description = "관리자가 새로운 직원 계정을 생성합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "계정 생성 성공", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class) ) } ),
             @ApiResponse(responseCode = "400", description = "계정 생성 실패", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class) ) } ),
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')") // ADMIN 권한이 있는 사용자만 접근 가능
     @PostMapping("/account")
     public ResponseEntity<?> createAccount(
-            @Parameter @CurrentUser UserPrincipal userPrincipal,
             @Valid @RequestBody SignUpReq signUpReq) {
-        return userService.createAccount(userPrincipal, signUpReq);
+        return userService.createAccount(signUpReq);
     }
-
-
 
     @Operation(summary = "직원 퇴사 처리 API", description = "관리자가 직원의 퇴사 처리를 합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "퇴사 처리 성공", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class) ) } ),
             @ApiResponse(responseCode = "400", description = "퇴사 처리 실패", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class) ) } ),
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')") // ADMIN 권한이 있는 사용자만 접근 가능
     @PostMapping("/termination/{employeeId}")
     public ResponseEntity<?> terminateEmployee(
-            @Parameter @CurrentUser UserPrincipal userPrincipal,
             @PathVariable Long employeeId){
-        return userService.terminateEmployee(userPrincipal, employeeId);
+        return userService.terminateEmployee(employeeId);
     }
 
 

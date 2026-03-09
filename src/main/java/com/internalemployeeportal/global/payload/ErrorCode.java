@@ -27,6 +27,8 @@ public enum ErrorCode {
     LOGIN_FAILED(400, "USR003", "로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요."),
     LOGOUT_FAILED(400, "USR004", "로그아웃에 실패하였습니다. 다시 시도해주세요."),
 
+    BACKGROUND_CHECK_NOT_FOUND(404, "BCK001", "해당 신원 조회를 찾을 수 없습니다."),
+
     EMPLOYEE_NOT_FOUND(404, "EMP001", "해당 직원을 찾을 수 없습니다.");
     private final String code;
     private final String message;

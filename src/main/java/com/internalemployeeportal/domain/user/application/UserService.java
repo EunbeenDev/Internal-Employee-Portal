@@ -14,6 +14,7 @@ import com.internalemployeeportal.domain.user.exception.AccountIdAlreadyExistsEx
 import com.internalemployeeportal.domain.user.exception.UserNotFoundException;
 import com.internalemployeeportal.global.DefaultAssert;
 import com.internalemployeeportal.global.config.security.token.UserPrincipal;
+import com.internalemployeeportal.global.payload.CommonApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class UserService {
 
     // 새로운 계정 생성
     @Transactional
-    public ResponseEntity<?> createAccount(UserPrincipal userPrincipal, @Valid SignUpReq signUpReq) {
+    public ResponseEntity<?> createAccount(SignUpReq signUpReq) {
         // 계정 ID 중복 확인
         validUniqueAccountId(signUpReq.getAccountId());
         String encodedPassword = passwordEncoder.encode(signUpReq.getPassword());
@@ -55,7 +56,7 @@ public class UserService {
                 .build();
         // User 엔티티 저장
         saveUser(newUser);
-        return ResponseEntity.ok("계정이 성공적으로 생성되었습니다.");
+        return buildOkResponse("계정이 성공적으로 생성되었습니다.");
     }
 
     private void validUniqueAccountId(String accountId) {
@@ -69,7 +70,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public ResponseEntity<?> terminateEmployee(UserPrincipal userPrincipal, Long employeeId) {
+    public ResponseEntity<?> terminateEmployee(Long employeeId) {
         // 직원 조회
         Employee employee = employeeService.findByEmployeeId(employeeId);
         // 직원 상태를 TERMINATED로 변경
@@ -105,13 +106,18 @@ public class UserService {
     }
 
     public User findUserByUserId(long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
-    // 사용자 존재 여부
-    public boolean existsByAccountId(String accountId) {
-        return userRepository.existsByAccountId(accountId);
+    // 응답 빌더 메서드
+    private ResponseEntity<?> buildOkResponse(String message) {
+        CommonApiResponse<Object> response = CommonApiResponse.builder()
+                .check(true)
+                .information(message)
+                .build();
+        return ResponseEntity.ok(response);
     }
+
 
 
 }

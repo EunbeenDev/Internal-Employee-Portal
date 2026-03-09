@@ -39,5 +39,9 @@ public class SignUpReq {
     @NotBlank(message = "이메일은 필수입니다.")
     private String email;
 
+    @Schema(type = "String", example = "개발팀", description = "직원 부서")
+    @NotBlank(message = "부서는 필수입니다.")
+    private String department;
+
 }
 

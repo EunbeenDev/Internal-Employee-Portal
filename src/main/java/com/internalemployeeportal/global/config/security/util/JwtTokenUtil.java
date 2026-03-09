@@ -1,8 +1,6 @@
 package com.internalemployeeportal.global.config.security.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -61,14 +59,21 @@ public class JwtTokenUtil {
 
     public boolean validateToken(String token) {
         try {
-            String accountId = getUsernameFromJWT(token);
-            boolean isValid = !isTokenExpired(token);
-            log.info("Token validation result for [{}]: {}", accountId, isValid);
-            return isValid;
-        } catch (Exception ex) {
-            log.warn("Token validation failed: {}", ex.getMessage());
-            return false;
+
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token);
+
+            return true;
+
+        } catch (ExpiredJwtException e) {
+            log.warn("JWT expired");
+        } catch (JwtException e) {
+            log.warn("Invalid JWT");
         }
+
+        return false;
     }
 
     public String getUsernameFromJWT(String token) {
@@ -164,6 +169,10 @@ public class JwtTokenUtil {
             log.error("Failed to extract subject from JWT: {}", ex.getMessage());
             throw ex;
         }
+    }
+
+    public Object getAccessTokenExpiration() {
+        return accessTokenExpiration;
     }
 }
 
