@@ -53,10 +53,10 @@ public class UserController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasRole('ADMIN')") // ADMIN 권한이 있는 사용자만 접근 가능
-    @PostMapping("/termination/{employeeId}")
+    @PostMapping("/termination/{employeeCode}")
     public ResponseEntity<?> terminateEmployee(
-            @PathVariable Long employeeId){
-        return userService.terminateEmployee(employeeId);
+            @PathVariable String employeeCode) {
+        return userService.terminateEmployee(employeeCode);
     }
 
 
